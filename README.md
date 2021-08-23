@@ -22,4 +22,4 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-<img src="https://raw.githubusercontent.com/Hendriyawan/AdmobRemote/master/ss_admob_remote.jpg" />
+<img src="https://raw.githubusercontent.com/Hendriyawan/AdmobRemote/master/ss_admob_remote.jpg" width="240" />
