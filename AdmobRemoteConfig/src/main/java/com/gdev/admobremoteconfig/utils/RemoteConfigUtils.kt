@@ -24,12 +24,13 @@ object RemoteConfigUtils {
      */
     fun buildDefaultValues(context: Context): HashMap<String, Any> {
         return defaults.apply {
-            put("${context.packageName}-$AD_BANNER_ID", "ca-app-pub-3940256099942544/6300978111")
-            put("${context.packageName}-$AD_INTERSTITIAL_ID", "ca-app-pub-3940256099942544/1033173712")
-            put("${context.packageName}-$HAS_MOVE_PLAY_STORE", false)
-            put("${context.packageName}-$NEW_PLAY_STORE_URL", "https://play.google.com/store/apps/details?id=${context.packageName}")
-            put("${context.packageName}-$VERSION_NAME", "1.0")
-            put("${context.packageName}-$VERSION_CODE", 1)
+            val packageName = "${context.packageName}".replace(".", "_")
+            put("$packageName"+ "_$AD_BANNER_ID", "ca-app-pub-3940256099942544/6300978111")
+            put("$packageName"+"_$AD_INTERSTITIAL_ID", "ca-app-pub-3940256099942544/1033173712")
+            put("$packageName"+"_$HAS_MOVE_PLAY_STORE", false)
+            put("$packageName"+"_$NEW_PLAY_STORE_URL", "https://play.google.com/store/apps/details?id=${context.packageName}")
+            put("$packageName"+"_$VERSION_NAME", "1.0")
+            put("$packageName"+"_$VERSION_CODE", 1)
         }
     }
 
@@ -40,6 +41,7 @@ object RemoteConfigUtils {
         context: Context,
         listener: (Boolean, HashMap<String, Any>) -> Unit
     ) {
+        val packageName = "${context.packageName}".replace(".", "_")
         val remoteSettings = FirebaseRemoteConfigSettings.Builder().apply {
             minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else 60 * 60
         }.build()
@@ -50,10 +52,10 @@ object RemoteConfigUtils {
             if (success) {
                 //val updated = it.result
                 val fetched = HashMap<String, Any>()
-                fetched["${context.packageName}-$AD_BANNER_ID"] = remoteConfig.getString("${context.packageName}-$AD_BANNER_ID")
-                fetched["${context.packageName}-$AD_INTERSTITIAL_ID"] = remoteConfig.getString("${context.packageName}-$AD_INTERSTITIAL_ID")
-                fetched["${context.packageName}-$HAS_MOVE_PLAY_STORE"] = remoteConfig.getBoolean("${context.packageName}-$HAS_MOVE_PLAY_STORE")
-                fetched["${context.packageName}-$NEW_PLAY_STORE_URL"] = remoteConfig.getString("${context.packageName}-$NEW_PLAY_STORE_URL")
+                fetched["$packageName"+"_$AD_BANNER_ID"] = remoteConfig.getString("$packageName"+"_$AD_BANNER_ID")
+                fetched["$packageName"+"_$AD_INTERSTITIAL_ID"] = remoteConfig.getString("$packageName"+"_$AD_INTERSTITIAL_ID")
+                fetched["$packageName"+"_$HAS_MOVE_PLAY_STORE"] = remoteConfig.getBoolean("$packageName"+"_$HAS_MOVE_PLAY_STORE")
+                fetched["$packageName"+"_$NEW_PLAY_STORE_URL"] = remoteConfig.getString("$packageName"+"_$NEW_PLAY_STORE_URL")
                 d(TAG, "$fetched")
                 listener(success, fetched)
             }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         RemoteConfigUtils.getFirebaseRemoteConfig(this) { isSuccess, data ->
             val adView = AdView(this)
             adView.adSize = AdSize.LARGE_BANNER
-            adView.adUnitId = data["$packageName-${RemoteConfigUtils.AD_BANNER_ID}"].toString()
+            adView.adUnitId = data["${packageName.replace(".", "_")}_${RemoteConfigUtils.AD_BANNER_ID}"].toString()
             adView.loadAd(AdRequest.Builder().build())
             findViewById<LinearLayoutCompat>(R.id.layout_ad_view).apply {
                 addView(adView)
