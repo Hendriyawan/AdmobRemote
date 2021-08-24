@@ -1,15 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.Hendriyawan'
 
 android {
-    compileSdk 30
-
+    compileSdkVersion 30
     defaultConfig {
-        minSdk 21
-        targetSdk 30
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
