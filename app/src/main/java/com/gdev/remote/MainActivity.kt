@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         //fetch data from Config
         //build default values first
         RemoteConfigUtils.buildDefaultValues(this)
-        RemoteConfigUtils.getFirebaseRemoteConfig(this) { isSuccess, data ->
+        RemoteConfigUtils.getFirebaseRemoteConfig(this) { _, data ->
             val adView = AdView(this)
             adView.adSize = AdSize.LARGE_BANNER
             adView.adUnitId = data["${packageName.replace(".", "_")}_${RemoteConfigUtils.AD_BANNER_ID}"].toString()
