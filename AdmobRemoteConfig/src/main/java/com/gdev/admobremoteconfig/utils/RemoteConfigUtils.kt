@@ -24,16 +24,6 @@ object RemoteConfigUtils {
      * @return HashMap<String, Any>() return a data from fetch
      */
     fun buildDefaultValues(context: Context, configs: HashMap<String, Any>): HashMap<String, Any> {
-        /*return defaults.apply {
-            val packageName = "${context.packageName}".replace(".", "_")
-            put("$packageName"+ "_$AD_BANNER_ID", "ca-app-pub-3940256099942544/6300978111")
-            put("$packageName"+"_$AD_INTERSTITIAL_ID", "ca-app-pub-3940256099942544/1033173712")
-            put("$packageName"+"_$HAS_MOVE_PLAY_STORE", false)
-            put("$packageName"+"_$NEW_PLAY_STORE_URL", "https://play.google.com/store/apps/details?id=${context.packageName}")
-            put("$packageName"+"_$VERSION_NAME", "1.0")
-            put("$packageName"+"_$VERSION_CODE", 1)
-            put("BASE_NAME", )
-        }*/
         return configs
     }
 
@@ -43,7 +33,7 @@ object RemoteConfigUtils {
     fun getFirebaseRemoteConfig(
         context: Context,
         configs: HashMap<String, Any>,
-        listener: (Boolean, HashMap<String, Any>) -> Unit
+        listener: (Boolean, FirebaseRemoteConfig) -> Unit
     ) {
         val packageName = "${context.packageName}".replace(".", "_")
         val remoteSettings = FirebaseRemoteConfigSettings.Builder().apply {
@@ -55,13 +45,7 @@ object RemoteConfigUtils {
             val success = it.isSuccessful
             if (success) {
                 //val updated = it.result
-                val fetched = HashMap<String, Any>()
-                fetched["$packageName"+"_$AD_BANNER_ID"] = remoteConfig.getString("$packageName"+"_$AD_BANNER_ID")
-                fetched["$packageName"+"_$AD_INTERSTITIAL_ID"] = remoteConfig.getString("$packageName"+"_$AD_INTERSTITIAL_ID")
-                fetched["$packageName"+"_$HAS_MOVE_PLAY_STORE"] = remoteConfig.getBoolean("$packageName"+"_$HAS_MOVE_PLAY_STORE")
-                fetched["$packageName"+"_$NEW_PLAY_STORE_URL"] = remoteConfig.getString("$packageName"+"_$NEW_PLAY_STORE_URL")
-                d(TAG, "$fetched")
-                listener(success, fetched)
+                listener(success, remoteConfig)
             }
         }
     }
