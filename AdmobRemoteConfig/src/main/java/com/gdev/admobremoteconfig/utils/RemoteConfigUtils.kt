@@ -14,7 +14,8 @@ object RemoteConfigUtils {
     const val NEW_PLAY_STORE_URL = "new_play_store_url"
     const val VERSION_NAME = "version_name"
     const val VERSION_CODE = "version_code"
-    private var defaults = HashMap<String, Any>()
+    const val BASE_NAME = "base_name"
+    //private var defaults = HashMap<String, Any>()
     private var remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 
     /**
@@ -22,8 +23,8 @@ object RemoteConfigUtils {
      * @param context Context
      * @return HashMap<String, Any>() return a data from fetch
      */
-    fun buildDefaultValues(context: Context): HashMap<String, Any> {
-        return defaults.apply {
+    fun buildDefaultValues(context: Context, configs: HashMap<String, Any>): HashMap<String, Any> {
+        /*return defaults.apply {
             val packageName = "${context.packageName}".replace(".", "_")
             put("$packageName"+ "_$AD_BANNER_ID", "ca-app-pub-3940256099942544/6300978111")
             put("$packageName"+"_$AD_INTERSTITIAL_ID", "ca-app-pub-3940256099942544/1033173712")
@@ -31,7 +32,9 @@ object RemoteConfigUtils {
             put("$packageName"+"_$NEW_PLAY_STORE_URL", "https://play.google.com/store/apps/details?id=${context.packageName}")
             put("$packageName"+"_$VERSION_NAME", "1.0")
             put("$packageName"+"_$VERSION_CODE", 1)
-        }
+            put("BASE_NAME", )
+        }*/
+        return configs
     }
 
     /**
@@ -39,6 +42,7 @@ object RemoteConfigUtils {
      */
     fun getFirebaseRemoteConfig(
         context: Context,
+        configs: HashMap<String, Any>,
         listener: (Boolean, HashMap<String, Any>) -> Unit
     ) {
         val packageName = "${context.packageName}".replace(".", "_")
@@ -46,7 +50,7 @@ object RemoteConfigUtils {
             minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else 60 * 60
         }.build()
         remoteConfig.setConfigSettingsAsync(remoteSettings)
-        remoteConfig.setDefaultsAsync(buildDefaultValues(context))
+        remoteConfig.setDefaultsAsync(buildDefaultValues(context, configs))
         remoteConfig.fetchAndActivate().addOnCompleteListener {
             val success = it.isSuccessful
             if (success) {
